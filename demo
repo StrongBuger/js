@@ -1,0 +1,38 @@
+//封装deepClone方法,用以复制对象(浅拷贝与深拷贝)
+function deepClone(obj){
+    if(typeof(obj)!=="object"||obj===null){
+        return obj
+    }
+    let target=(Object.prototype.toString.call(obj)=="[object Array]"?[]:{});
+    for(var i in obj){
+        if(typeof(obj[i])=="object"){
+           deepClone(obj[i])
+        }
+        target[i]=obj[i]
+    }
+    return target
+}
+// extend({name:'xxx',age:18,hobby:['打篮球','羽毛球','乒乓球']},{age:30,gender:'男',hobby:['写作业','打游戏','女']});
+// {name:'xxx',age:30,gender:'男',hobby:['打篮球','羽毛球','乒乓球','写作业','打游戏','女']}
+function extend(a,b,c){
+    if(b instanceof Array){
+        for(var i=0; i<b.length; i++){
+            extend(a,b[i],'three')
+        }
+    }
+    for(var i in b){
+        if(c){
+          if(i in a){
+            if(i!='age'){
+              a[i]+=b[i]
+            }else{
+              a[i]=b[i]
+            }
+          }else{
+           a[i]=b[i]
+          }
+        }
+    }
+    return a
+}
+console.log(extend({},[a,b]))
