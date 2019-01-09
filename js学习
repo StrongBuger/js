@@ -1,0 +1,3 @@
+让nodeList继承数组的forEach和map属性
+[].slice.call(document.querySelectorAll(selector), 0);
+
