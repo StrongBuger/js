@@ -163,5 +163,11 @@ console.log(personObj1); // -> ?
 console.log(personObj2); // -> ?
 
 
-版权声明
-https://blog.fundebug.com/2017/08/09/explain_value_reference_in_js/
+null,undefined,number,string,boolean,object。
+复杂类型是指object即广义的对象类型，可由多个简单类型的值的合成，可以看作是一个存放各种值的容器。比如arr,object,regx等
+基础类型指number,string,boolean。
+特殊类型指null,undefined。
+基础类型和复杂类型的区别：
+基础类型将内容直接存储在栈中（大小固定位置连续的存储空间），记录的是该数据类型的值，即直接访问，基础类型赋值是复制（copy）；
+复杂类型将内容存储在堆中，堆所对应的栈中记录的是指针（堆的地址），外部访问时先引出地址，再通过地址去找到值所存放的位置。
+复杂类型赋值是地址引用。
