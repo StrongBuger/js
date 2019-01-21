@@ -66,10 +66,18 @@ var a=isType("");
 console.log(a);
 
 typeof和instanceof
+typeof主要是用来判断对象是否存在及是否赋值的
+typeof peilj  "undefined" 不存在
+var a;
+typeof a   "undefined" 未赋值
+最好检查原始类型的值
+
+
 因为typeof判断object(复合类型的时候)判断出来的还是object,所以出来了instanceof.
 {} [] new a() 
 要想判断一个数据具体是哪一种 object 的时候，我们需要利用 instanceof 这个操作符来判断
-其实 instanceof 主要的作用就是判断一个实例是否属于某种类型
+其实 instanceof 主要的作用就是判断一个实例是否属于某种类型(左边按照原型连接可以一级一级的找)
+instanceof 检测左侧的 __proto__ 原型链上，是否存在右侧的 prototype 原型
 
 function new_instance_of(leftVaule, rightVaule) { 
     let rightProto = rightVaule.prototype; // 取右表达式的 prototype 值
@@ -90,6 +98,24 @@ function new_instance_of(leftVaule, rightVaule) {
 对象有一个隐式属性(_proto_),一个显式属性.(prototype)
 instanceof左边找对象的_proto_ 直到找到这个值等于右边的prototype返回ture,否则左边用原型链一级一级往上找
 
+
+null与undefined与isNaN区别
+undefined是定义了没有赋值
+null是一个不能存在的对象,可以理解为不存在对象的占位符 尝试获取一个不存在的对象
+
+typeof undefined undefined
+typeof null  object
+
+ECMAScript认为undefined是从null派生出来的 所以null==undefined
+
+区分的话 
+null===undefined
+typeof null==typeof undefined 
+可以区分
+
+isNaN判断是否是数字
+isNaN===isNaN true
+typeof isNaN "function"
 
 
 
