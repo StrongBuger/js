@@ -1,0 +1,67 @@
+强制类型转换为基本类型值
+Number()
+String()
+Boolean()
+
+基本类型值  number,string,boolean,null,undefined
+
+JSON.stringify() 是把JSON转字符串
+JSON.parse()     是把字符串转JSON
+
+转换为字符串
+全局函数toString； 
+与此同时Object.prototype也定义了toString方法，
+使得所有对象都拥有转换为字符串的能力。
+
+转换为数字
+ parseInt() 返回整数
+ parseFloat() 返回小数(只返回第一个小数点之后的小数,第二个小数点忽略)
+ 共同点:遇到非数字的字符就直接忽略后面的返回前面的了.
+
+
+
+隐式类型转换
+四则运算
+加法运算符+是双目运算符，只要其中一个是String类型，表达式的值便是一个String。
+对于其他的四则运算，只有其中一个是Number类型，表达式的值便是一个Number。
+对于非法字符的情况通常会返回NaN：
+'1' * 'a'     // => NaN，这是因为parseInt(a)值为NaN，1 * NaN 还是 NaN
+
+
+
+1. 类型错误有可能会被类型转换所隐藏。
+2. “+”既可以表示字符串连接，又可以表示算术加，这取决于它的操作数，如果有一个为字符串的，那么，就是字符串连接了。
+3. 对象通过valueOf方法，把自己转换成数字，通过toString方法，把自己转换成字符串。
+4.具有valueOf方法的对象，应该定义一个相应的toString方法，用来返回相等的数字的字符串形式。
+5.检测一些未定义的变量时，应该使用typeOf或者与undefined作比较，而不应该直接用真值运算。
+
+检测未定义变量
+function isNull(obj){
+   if(obj===undefined||obj===null||obj===""){
+      return true
+   }else{
+      return false
+   }
+}
+检测类型
+function isType(obj){
+    if(obj==undefined || obj==null){
+       return "不能为空"
+    }
+    if(typeof(obj)!=="object"){ //string,boolean,number,function
+       return typeof(obj)
+    }else{
+       let typeLx=Object.prototype.toString.call(obj).slice(8,-1);
+       switch(typeLx){
+           case "Array":
+           return "数组类型"
+           break;
+           case "Object":
+           return "对象类型"
+           break;
+       }
+    }
+}
+var a=isType("");
+console.log(a);
+
