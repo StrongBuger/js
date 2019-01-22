@@ -46,6 +46,15 @@ c()
 是否在“严格模式”下？如果是，“this” 就是 undefined，如果不是，继续第 6 步。
 JavaScript 很奇怪，“this” 会指向 “window” 对象。
 
+如果一个方法是在一个方法中写的,那么这个方法的的this在非严格模式下指向window
 
+function a(){
+   function b(){
+      this.name="plj" //window
+   }
+}
+a()
+
+差三篇文章
 
 
