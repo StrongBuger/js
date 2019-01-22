@@ -1,3 +1,4 @@
+在ES5中this永远指向最后调用它的那个对象
 this 具体指向哪个对象是在运行时基于函数的执行环境动态绑定，而非声明时的环境
 作为对象的方法调用，this 指向该对象
 作为普通函数调用，this 指向全局对象
@@ -55,6 +56,43 @@ function a(){
 }
 a()
 
-差三篇文章
+怎么改变 this 的指向
+使用 ES6 的箭头函数
+在函数内部使用 _this = this
+使用 apply、call、bind
+new 实例化一个对象
 
+箭头函数的this,箭头函数没有this,他的this是继承而来的,默认指向它定义时所处的对象.而不是执行时的对象
+箭头函数根本没有自己的this，导致内部的this就是外层代码块的this。
+箭头函数外面包裹一层非箭头函数的话,this指向最近一层非箭头函数的this.
+
+setInterval跟setTimeout调用的代码运行在与所在函数完全分离的执行环境上。这会导致这些代码中包含的 this 关键字会指向 window (或全局)对象
+
+var obj={
+    name:'plj',
+    a:()=>{
+        console.log(this.name)
+    },
+    c:function(){
+        console.log(this.name)
+    }
+}
+obj.a()
+obj.c()
+
+function a(){}
+var A=new a()
+
+var obj={};
+obj._proto_=a.prototype
+var result=a.call(obj);
+return typeof result=='obj'?result:obj
+
+创建一个空对象 obj;
+将新创建的空对象的隐式原型指向其构造函数的显示原型。
+使用 call 改变 this 的指向
+如果无返回值或者返回一个非对象值，则将 obj 返回作为新对象；如果返回值是一个新对象的话那么直接直接返回该对象。
+
+
+https://github.com/Abiel1024/blog/issues/16 看不懂 最后一篇
 
