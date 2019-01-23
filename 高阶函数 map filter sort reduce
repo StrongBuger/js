@@ -1,0 +1,72 @@
+高阶函数就是传的参数可以为函数
+sort()排序是按照ASCII码排序在大写字母之后
+[1,20,10,2].sort() 1,10 2 20 转换成字符串 然后排序 不准确.
+通常规定，对于两个元素x和y，如果认为x < y，则返回-1，如果认为x == y，则返回0，如果认为x > y，则返回1，这样，排序算法就不用关心具体的比较过程，而是根据比较结果直接排序。
+
+正序排序
+var arr=[1,2,3,10,30,89,7];
+arr.sort(function(x,y){
+    if(x<y){
+        return -1
+    }
+    if(x>y){
+        return 1
+    }
+    return 0
+})
+console.log(arr);
+
+var arr=[1,2,3,10,30,89,7];
+arr.sort(function(x,y){
+    return x-y
+})
+console.log(arr);
+
+倒序排序
+var arr=[1,2,3,10,30,89,7];
+arr.sort(function(x,y){
+    if(x<y){
+        return 1
+    }
+    if(x>y){
+        return -1
+    }
+    return 0
+})
+console.log(arr);
+
+filter过滤/筛选
+filter和map一样都是接受一个函数,不同的是filter把传入的函数依次作用与每个元素,然后根据返回值是true还是false决定保留还是丢弃该元素。
+filter也是一个常用的操作，它用于把Array的某些元素过滤掉，然后返回剩下的元素
+filter巧妙去重复
+var arr=[1,2,3,4,5,22,2,1,3,4]
+var a1=arr.filter(function(item,index,self){
+    return self.indexOf(item)===index?true:false
+})
+console.log(a1)
+
+map()接受一个函数,对每一个元素过滤 在Array的每一个元素并把结果生成一个新的Array 返回一个新的数组
+var arr=[1,2,3,4,5,22,2,1,3,4]
+var arr1=arr.map(function(item){
+    return item+1;
+})
+console.log(arr1);
+
+reduce()把一个函数作用在这个Array的[x1, x2, x3...]上，这个函数必须接收两个参数，reduce()把结果继续和序列的下一个元素做累积计算
+[x1, x2, x3, x4].reduce(f) = f(f(f(x1, x2), x3), x4) 本质就是a和b做处理后,在和c做处理,在和d做处理
+求和 求积 求乘
+
+var arr=[1,2,3,4]
+arr.reduce(function(a,b){
+    return a+b
+})
+
+var arr=[1,2,3,4]
+arr.reduce(function(a,b){
+    return a*b
+})
+
+
+
+
+
