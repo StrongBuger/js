@@ -58,4 +58,4 @@ var obj={
 var {name,list:{name:listName,age},defaults=true}=obj;
 console.log(name+listName+age+defaults)
 
-
+词法作用域就是在你写代码时将变量和块作用域写在哪里来决定，也就是词法作用域是静态的作用域，在你书写代码时就确定了。
