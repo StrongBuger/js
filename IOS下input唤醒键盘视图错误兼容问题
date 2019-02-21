@@ -1,0 +1,51 @@
+问题场景：
+
+    前阵子正在做微信的h5页面，所有页面都测试完毕无误。突然上完厕所回来，测试说，在ios下页面的交互没反应，无法点击。
+
+    测试后，在安卓下没问题，在部分ios机型下没问题，唯独在ios12下，微信浏览器内，会出现上述描述情况：点击input输入框，唤醒键盘后，会导致下面和上面的按钮无法点击，或是点击部分区域会触发下面的事件。
+
+错误排查
+
+    经过2天，去微信开发者社区和自己测试，百度等后发现。
+
+    首先排查内核原因：1：安卓的微信浏览器用的qq的X5内核，ios的微信浏览器用的是本机自带的内核，但是只有在ios12下才会出现问题，所以跟内核没有什么太大的原因。2： 在ios12和ios12下，微信浏览器到底出现了什么变化。微信开发社区的工作人员的回复是：
+
+    
+
+    然后就再也没回复过我了。。。。微信的开发文档是真多狗血，头疼，无力吐槽。
+
+    在ios12时，已经抛弃了UIWebView,必须使用WKWebview,所以会出现，在ios12下，部分机型不会出现该问题，只有使用了WKWebview才会。
+
+    幸好有其他的大神回复了我
+
+这个不是事件错误,是部分IOS系统在微信浏览器上面只要是输入框聚焦就会把window顶上去一点,失焦后又没有回位,你视觉上回位了而已,你下次点击某个地方的时候,实际上你是点的下面的某个地方,写个兼容文件就好.
+
+     就是这个大神，很感谢他发的兼容脚本，经测试后确实解决了该问题。
+
+解决方案
+
+// 兼容部分ios手机input失焦后页面上移问题
+(function() {
+  let myFunction
+  let isWXAndIos = isWeiXinAndIos()
+  if (isWXAndIos) { // 既是微信浏览器 又是ios============（因为查到只有在微信环境下，ios手机上才会出现input失去焦点的时候页面被顶起）
+    document.body.addEventListener('focusin', () => { // 软键盘弹起事件
+      clearTimeout(myFunction)
+    })
+    document.body.addEventListener('focusout', () => { // 软键盘关闭事件
+      clearTimeout(myFunction)
+      myFunction = setTimeout(function() {
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'})// 重点  =======当键盘收起的时候让页面回到原始位置
+      }, 200)
+    })
+  }
+})()
+
+function isWeiXinAndIos() {
+  // window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
+  let ua = '' + window.navigator.userAgent.toLowerCase()
+  // 通过正则表达式匹配ua中是否含有MicroMessenger字符串且是IOS系统
+  let isWeixin = /MicroMessenger/i.test(ua) // 是在微信浏览器
+  let isIos = /\(i[^;]+;( U;)? CPU.+Mac OS X/i.test(ua) // 是IOS系统
+  return isWeixin && isIos
+}
