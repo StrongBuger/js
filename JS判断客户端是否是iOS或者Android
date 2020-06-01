@@ -1,0 +1,12 @@
+
+
+每个客户端都带有自身的UA标识，通过JavaScript，可以获取客户端标识，我们可以获取浏览器的userAgent，
+用正则来判断手机是ios（苹果）还是Android（安卓）客户端。
+
+<script type="text/javascript">
+var u = navigator.userAgent;
+var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+alert('是否是Android：'+isAndroid);
+alert('是否是iOS：'+isiOS);
+</script>
